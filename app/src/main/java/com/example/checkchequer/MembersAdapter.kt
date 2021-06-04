@@ -73,7 +73,6 @@ class MembersAdapter(var array_members: MutableList<Member>, var button_next: Bu
                 setButtonNPClickable(context, true)
             else
                 setButtonNPClickable(context, false)
-
         }
 
         fun bind(member: Member) {
@@ -102,22 +101,6 @@ class MembersAdapter(var array_members: MutableList<Member>, var button_next: Bu
                 }
             }
 
-            this.name_edit_text.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                }
-
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (count > 0 && count_payer > 0 && members_size > 1) {
-                        member.setName(member.getName() + s)
-                        setButtonNPClickable(context, true)
-                    }
-                    else
-                        setButtonNPClickable(context, false)
-                }
-            })
 
         }
     }

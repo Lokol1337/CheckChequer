@@ -6,17 +6,17 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.PrintWriter
 
-//077316
-class DataBaseHandler(path: String) {
+
+class DataBaseHandler {
 
     data class Meeting(
         val id: Int,
         val date: String,
         val countMembers: Int,
-        var arrayMembers: MutableList<Member_JSON>,
+        var arrayMembers: MutableList<MemberJSON>,
         val stringOutput: String
     )
-    data class Member_JSON(
+    data class MemberJSON(
         val name: String,
         val status: Boolean,
         val summ: Int
@@ -28,12 +28,13 @@ class DataBaseHandler(path: String) {
     var FILE_DIRECTORY: File
     var FILE: File
     var MEETING_LIST: MutableList<Meeting>
-    var MEMBER_LIST: MutableList<Member_JSON>
+    var MEMBER_LIST: MutableList<MemberJSON>
+    var PATH: String
 
 
     //private var ARRAY_MEMBERS: MutableList<Member> = mutableListOf()
-
-    init {
+    constructor(path: String){
+        PATH = path
         MEMBERS_DATABASE_NAME = "FILE_NAME_MEMBERS.json"
         MEMBERS_DATABASE_PATH = path
         FILE_DIRECTORY = File(MEMBERS_DATABASE_PATH, "FilesDB")
@@ -41,7 +42,7 @@ class DataBaseHandler(path: String) {
         FILE = File(FILE_DIRECTORY, MEMBERS_DATABASE_NAME)
         FILE.createNewFile()
         MEETING_LIST = mutableListOf<Meeting>()
-        MEMBER_LIST = mutableListOf<Member_JSON>()
+        MEMBER_LIST = mutableListOf<MemberJSON>()
         val inputAsString = FileInputStream(FILE).bufferedReader().use { it.readText() }
         try {
             MEETING_LIST = mapper.readValue(inputAsString)
@@ -59,12 +60,12 @@ class DataBaseHandler(path: String) {
     }
 
     fun addMeeting(members: MutableList<Member>){
-        MEETING_LIST.add(Meeting(MEETING_LIST.size, "", members.size, mutableListOf<Member_JSON>(), ""))
+        MEETING_LIST.add(Meeting(MEETING_LIST.size, "", members.size, mutableListOf<MemberJSON>(), ""))
         addMembers(members)
     }
 
     fun addMember(member: Member) {
-        val m = Member_JSON(member.getName(), member.getStatus(), member.getSumm())
+        val m = MemberJSON(member.getName(), member.getStatus(), member.getSumm())
         MEETING_LIST[0].arrayMembers.add(m)
         val jsonArray = mapper.writeValueAsString(MEETING_LIST)
         writeTOFile(jsonArray)
@@ -72,7 +73,7 @@ class DataBaseHandler(path: String) {
 
     fun addMembers(members: MutableList<Member>) {
         for (member: Member in members) {
-            val m = Member_JSON(member.getName(), member.getStatus(), member.getSumm())
+            val m = MemberJSON(member.getName(), member.getStatus(), member.getSumm())
             MEETING_LIST[0].arrayMembers.add(m)
         }
         val jsonArray = mapper.writeValueAsString(MEETING_LIST)
@@ -95,7 +96,7 @@ class DataBaseHandler(path: String) {
     fun getMember(name: String): Member? {
         var id = -1
         var count = 1
-        for (member: Member_JSON in MEETING_LIST[0].arrayMembers) {
+        for (member: MemberJSON in MEETING_LIST[0].arrayMembers) {
             if (member.name == name) {
                 id = count
                 break
@@ -121,7 +122,7 @@ class DataBaseHandler(path: String) {
     }
 
     fun memberIsExist(member: Member) : Boolean{
-        for (m: Member_JSON in MEETING_LIST[0].arrayMembers) {
+        for (m: MemberJSON in MEETING_LIST[0].arrayMembers) {
             if (m.name == member.getName() && m.status == member.getStatus() && m.summ == member.getSumm())
                 return true
         }
@@ -131,7 +132,15 @@ class DataBaseHandler(path: String) {
     fun cleanDB(){
         writeTOFile("")
         MEETING_LIST = mutableListOf<Meeting>()
-        MEMBER_LIST = mutableListOf<Member_JSON>()
+        MEMBER_LIST = mutableListOf<MemberJSON>()
+    }
+
+    fun stringAllUsers() : String{
+        var str: String = ""
+        for (m in MEMBER_LIST){
+            str += m.name + ":  " + m.status + "  " + m.summ + "\n"
+        }
+        return str
     }
 
 }

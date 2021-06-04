@@ -8,8 +8,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".ActivitySetStatus"></activity>
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".ActivityRequestScannerAPI"></activity>
+        <activity android:name=".ActivityScanOrWrite" />
         <activity android:name=".ActivityAddMembers" />
         <activity android:name=".MainActivity">
             <intent-filter>
