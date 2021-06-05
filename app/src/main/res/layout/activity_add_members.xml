@@ -38,11 +38,17 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical">-->
 
-                <androidx.recyclerview.widget.RecyclerView
+                <!--<androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/activity_add_members_RV"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                </androidx.recyclerview.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>-->
+
+                <ListView
+                    android:id="@+id/activity_add_members_LV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </ListView>
 
 
                 <LinearLayout

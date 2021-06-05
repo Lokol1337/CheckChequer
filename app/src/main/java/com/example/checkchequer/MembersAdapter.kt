@@ -1,8 +1,6 @@
 package com.example.checkchequer
 
 import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +26,7 @@ class MembersAdapter(var array_members: MutableList<Member>, var button_next: Bu
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberViewHolder {
         this.context = parent.context
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycle_item_name_status, parent, false)
+            .inflate(R.layout.listview_item_name_status, parent, false)
         val new_member_view_holder = MemberViewHolder(itemView)
         return new_member_view_holder
     }
