@@ -16,6 +16,7 @@ import java.lang.AssertionError
 class ActivityRequestScannerAPI : AppCompatActivity() {
 
 //    private lateinit var scannerService: RetrofitServices
+    lateinit var dataBaseHandler: DataBaseHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +25,10 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
     }
 
     fun initComponents(){
+        val path: String = intent.getStringExtra("path").toString()
+        dataBaseHandler = DataBaseHandler(path)
+        println("\n---- ALL USERS: " + dataBaseHandler.stringAllUsers())
+
         val textView = findViewById<TextView>(R.id.xer)
         val text: String = intent.getStringExtra("text").toString()
         val list_positions: List<Item> = GetCheckFromAPI(text)
@@ -37,6 +42,7 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
             result += position.toString()
         }
         textView.text = result
+
     }
 
     fun GetCheckFromAPI(text: String?): List<Item>{
