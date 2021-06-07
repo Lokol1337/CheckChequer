@@ -49,6 +49,14 @@ class MembersAdapter(var array_members: MutableList<Member>, var button_next: Bu
         setButtonNPClickable(context, false)
     }
 
+    fun deleteMember(context: Context){
+        if(members_size > 1){
+            array_members.removeAt(members_size - 1)
+            members_size--
+            //notifyDataSetChanged()
+        }
+    }
+
     fun setButtonNPClickable(context: Context, flag: Boolean) {
         button_next.isClickable = flag
         if (flag)
@@ -100,6 +108,15 @@ class MembersAdapter(var array_members: MutableList<Member>, var button_next: Bu
             this.name_edit_text.setOnFocusChangeListener { view, hasFocus ->
                 if (hasFocus) {
                     setButtonNPClickable(context, false)
+                }
+                else {
+                    if (member.getName() != this.name_edit_text.text.toString())
+                        member.setName(this.name_edit_text.text.toString())
+                    checkFields()
+                    println("---- EDIT_TEXT :: " + this.name_edit_text.text.toString() + "\n" +
+                            "---- STATUS_MEMBER :: " + member.getStatus() + "\n" +
+                            "---- NAME_MEMBER :: " + member.getName() + "\n" +
+                            "---- FLAG_FILLED :: " + flag_filled_edit_texts + "\n" + context)
                 }
             }
 

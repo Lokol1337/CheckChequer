@@ -48,7 +48,9 @@ class ActivityAddMembers : AppCompatActivity() {
     }
 
     fun deleteLastMember(view: View) {
-        //TODO(РЕАЛИЗОВАТЬ УДАЛЕНИЕ ПОСЛЕДНЕЙ КАРТОЧКИ)
+        //TODO(НЕ РАБОТАЕТ, когда на последнем элементе фокус -> нужно вставлять кнопку удаления в сам элемент)
+        members_adapter.deleteMember(this)
+        members_adapter.notifyItemRemoved(members_adapter.itemCount)
     }
 
     fun buttonToASetStatus(view: View) {
