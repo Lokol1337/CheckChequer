@@ -10,16 +10,17 @@ import java.io.PrintWriter
 class DataBaseHandler {
 
     data class Meeting(
-        val id: Int,
-        val date: String,
-        val countMembers: Int,
-        var arrayMembers: MutableList<MemberJSON>,
-        val stringOutput: String
+            val id: Int,
+            val date: String,
+            val countMembers: Int,
+            var arrayMembers: MutableList<MemberJSON>,
+            val stringOutput: String
     )
+
     data class MemberJSON(
-        val name: String,
-        val status: Boolean,
-        val summ: Int
+            val name: String,
+            val status: Boolean,
+            val summ: Int
     )
 
     var mapper = jacksonObjectMapper()
@@ -33,7 +34,7 @@ class DataBaseHandler {
 
 
     //private var ARRAY_MEMBERS: MutableList<Member> = mutableListOf()
-    constructor(path: String){
+    constructor(path: String) {
         PATH = path
         MEMBERS_DATABASE_NAME = "FILE_NAME_MEMBERS.json"
         MEMBERS_DATABASE_PATH = path
@@ -53,13 +54,13 @@ class DataBaseHandler {
         }
     }
 
-    fun writeTOFile(str: String){
+    fun writeTOFile(str: String) {
         val writer = PrintWriter(FILE)
         writer.print(str)
         writer.close()
     }
 
-    fun addMeeting(members: MutableList<Member>){
+    fun addMeeting(members: MutableList<Member>) {
         MEETING_LIST.add(Meeting(MEETING_LIST.size, "", members.size, mutableListOf<MemberJSON>(), ""))
         addMembers(members)
     }
@@ -121,7 +122,7 @@ class DataBaseHandler {
         return listMembers
     }
 
-    fun memberIsExist(member: Member) : Boolean{
+    fun memberIsExist(member: Member): Boolean {
         for (m: MemberJSON in MEETING_LIST[0].arrayMembers) {
             if (m.name == member.getName() && m.status == member.getStatus() && m.summ == member.getSumm())
                 return true
@@ -129,15 +130,15 @@ class DataBaseHandler {
         return false
     }
 
-    fun cleanDB(){
+    fun cleanDB() {
         writeTOFile("")
         MEETING_LIST = mutableListOf<Meeting>()
         MEMBER_LIST = mutableListOf<MemberJSON>()
     }
 
-    fun stringAllUsers() : String{
+    fun stringAllUsers(): String {
         var str: String = ""
-        for (m in MEMBER_LIST){
+        for (m in MEMBER_LIST) {
             str += m.name + ":  " + m.status + "  " + m.summ + "\n"
         }
         return str
