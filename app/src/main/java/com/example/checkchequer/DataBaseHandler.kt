@@ -1,10 +1,14 @@
 package com.example.checkchequer
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.FileInputStream
 import java.io.PrintWriter
+import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class DataBaseHandler {
@@ -23,35 +27,48 @@ class DataBaseHandler {
             val summ: Int
     )
 
-    var mapper = jacksonObjectMapper()
+
     var MEMBERS_DATABASE_NAME: String
-    var MEMBERS_DATABASE_PATH: String
     var FILE_DIRECTORY: File
     var FILE: File
     var MEETING_LIST: MutableList<Meeting>
     var MEMBER_LIST: MutableList<MemberJSON>
-    var PATH: String
+    var _gson = Gson()
+    val mutableListTutorialType = object : TypeToken<MutableList<Meeting>>() {}.type
 
 
     //private var ARRAY_MEMBERS: MutableList<Member> = mutableListOf()
     constructor(path: String) {
-        PATH = path
         MEMBERS_DATABASE_NAME = "FILE_NAME_MEMBERS.json"
-        MEMBERS_DATABASE_PATH = path
-        FILE_DIRECTORY = File(MEMBERS_DATABASE_PATH, "FilesDB")
-        FILE_DIRECTORY.mkdirs()
+        FILE_DIRECTORY = File(path, "FilesDB")
         FILE = File(FILE_DIRECTORY, MEMBERS_DATABASE_NAME)
-        FILE.createNewFile()
+        //FILE.createNewFile()
+        if (!FILE.parentFile.exists())
+            FILE.parentFile.mkdirs()
+        if (!FILE.exists())
+            FILE.createNewFile()
         MEETING_LIST = mutableListOf<Meeting>()
         MEMBER_LIST = mutableListOf<MemberJSON>()
-        val inputAsString = FileInputStream(FILE).bufferedReader().use { it.readText() }
-        try {
+        val jsonStr: String = FileInputStream(FILE).bufferedReader().use { it.readText() }
+        if (jsonStr.isNotEmpty())
+            try {
+                MEETING_LIST = _gson.fromJson(jsonStr, mutableListTutorialType)
+            } catch (e: Exception) {
+                println("---- SMALL ERROR")
+            }
+
+        /*if (inputAsString == "" || inputAsString.isEmpty()){
+            MEETING_LIST = mapper.readValue(inputAsString)
+            MEMBER_LIST = MEETING_LIST[0].arrayMembers
+        }*/
+
+        /*try {
             MEETING_LIST = mapper.readValue(inputAsString)
             MEMBER_LIST = MEETING_LIST[0].arrayMembers
         } catch (e: Exception) {
             //e.printStackTrace()
             print("---- SMALL ERROR")
-        }
+        }*/
     }
 
     fun writeTOFile(str: String) {
@@ -61,15 +78,21 @@ class DataBaseHandler {
     }
 
     fun addMeeting(members: MutableList<Member>) {
-        MEETING_LIST.add(Meeting(MEETING_LIST.size, "", members.size, mutableListOf<MemberJSON>(), ""))
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm")
+        MEETING_LIST.add(Meeting(MEETING_LIST.size, sdf.format(Date()), members.size, mutableListOf<MemberJSON>(), ""))
         addMembers(members)
     }
 
     fun addMember(member: Member) {
         val m = MemberJSON(member.getName(), member.getStatus(), member.getSumm())
         MEETING_LIST[0].arrayMembers.add(m)
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
+        writeTOFile(jsonTutsArrayPretty)
+
+        /*MEETING_LIST[0].arrayMembers.add(m)
         val jsonArray = mapper.writeValueAsString(MEETING_LIST)
-        writeTOFile(jsonArray)
+        writeTOFile(jsonArray)*/
     }
 
     fun addMembers(members: MutableList<Member>) {
@@ -77,8 +100,9 @@ class DataBaseHandler {
             val m = MemberJSON(member.getName(), member.getStatus(), member.getSumm())
             MEETING_LIST[0].arrayMembers.add(m)
         }
-        val jsonArray = mapper.writeValueAsString(MEETING_LIST)
-        writeTOFile(jsonArray)
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
+        writeTOFile(jsonTutsArrayPretty)
     }
 
 

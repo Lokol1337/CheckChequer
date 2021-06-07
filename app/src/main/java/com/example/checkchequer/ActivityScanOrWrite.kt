@@ -14,12 +14,8 @@ class ActivityScanOrWrite : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_or_write)
-        initComponents()
     }
 
-    fun initComponents(){
-
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -30,14 +26,16 @@ class ActivityScanOrWrite : AppCompatActivity() {
                     Toast.makeText(this, "Something wrong", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(this, "Scanned" + result.contents, Toast.LENGTH_LONG).show()
+                    val path = intent.getStringExtra("path").toString()
                     val intent = Intent(this, ActivityRequestScannerAPI::class.java)
                     intent.putExtra("text", result.contents.toString())
-                    intent.putExtra("path", intent.getStringExtra("path").toString())
+                    intent.putExtra("path", path)
                     startActivity(intent)
                 }
             }
         }
     }
+
 
     fun ButtonScan(view: View){
         val scanner = IntentIntegrator(this)

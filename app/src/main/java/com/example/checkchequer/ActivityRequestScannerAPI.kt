@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import com.fasterxml.jackson.databind.node.IntNode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +24,7 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
     }
 
     fun initComponents(){
-        val path: String = intent.getStringExtra("path").toString()
+        val path = intent.getStringExtra("path").toString()
         dataBaseHandler = DataBaseHandler(path)
         println("\n---- ALL USERS: " + dataBaseHandler.stringAllUsers())
 
