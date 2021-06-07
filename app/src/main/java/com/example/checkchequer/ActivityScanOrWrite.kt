@@ -11,20 +11,11 @@ import com.google.zxing.integration.android.IntentIntegrator
 
 class ActivityScanOrWrite : AppCompatActivity() {
 
-    //lateinit var dataBaseHandler: DataBaseHandler
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_or_write)
-        initComponents()
     }
 
-    fun initComponents(){
-        /*val path: String = intent.getStringExtra("path").toString()
-        dataBaseHandler = DataBaseHandler(path)
-        println("\n---- ALL USERS: " + dataBaseHandler.stringAllUsers())*/
-
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -35,13 +26,16 @@ class ActivityScanOrWrite : AppCompatActivity() {
                     Toast.makeText(this, "Something wrong", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(this, "Scanned" + result.contents, Toast.LENGTH_LONG).show()
+                    val path = intent.getStringExtra("path").toString()
                     val intent = Intent(this, ActivityRequestScannerAPI::class.java)
                     intent.putExtra("text", result.contents.toString())
+                    intent.putExtra("path", path)
                     startActivity(intent)
                 }
             }
         }
     }
+
 
     fun ButtonScan(view: View){
         val scanner = IntentIntegrator(this)
