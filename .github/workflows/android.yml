@@ -9,7 +9,7 @@ jobs:
         run: |
           cd D:
           cd D:/CheckChequer 
-          set JAVA_HOME=%JAVA_HOME%;C:\Program Files\Java\jre1.8.0_281
+          set JAVA_HOME="%JAVA_HOME%;C:\Program Files\Java\jre1.8.0_281"
           echo %JAVA_HOME%
           .\gradlew build
           .\gradlew assembleRelease
