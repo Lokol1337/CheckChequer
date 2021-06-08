@@ -9,7 +9,7 @@ jobs:
         run: |
           cd D:
           cd D:/CheckChequer 
-          .\gradlew assembleRelease
+          .\gradlew --status
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
