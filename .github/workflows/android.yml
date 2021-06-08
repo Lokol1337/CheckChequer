@@ -7,7 +7,7 @@ jobs:
     steps: 
       - name: Build Android Release
         run: |
-          chmod +x ./gradlew
+          cd D:
           cd D:/CheckChequer && ./gradlew assembleRelease
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
