@@ -7,6 +7,7 @@ jobs:
     steps: 
       - name: Build Android Release
         run: |
+          dir
           cd D:
           cd D:/CheckChequer
           echo %JAVA_HOME%
