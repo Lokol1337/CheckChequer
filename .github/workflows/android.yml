@@ -3,4 +3,4 @@ on:
   push:
 jobs:
   command: |
-    - echo "Execute this script in all jobs that don't already have an after_script section."
+    echo "Execute this script in all jobs that don't already have an after_script section."
