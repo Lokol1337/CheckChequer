@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import com.fasterxml.jackson.databind.node.IntNode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,37 +25,39 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
     fun initComponents(){
         val textView = findViewById<TextView>(R.id.xer)
         val text: String = intent.getStringExtra("text").toString()
-        val list_positions: List<Item> = GetCheckFromAPI(text)
-        if (list_positions.isEmpty()){
-            val intent_to_scan_or_write = Intent(this, ActivityScanOrWrite::class.java)
-            startActivity(intent_to_scan_or_write)
-        }
+//        val list_positions: List<Item> = GetCheckFromAPI(text)
+//        if (list_positions.isEmpty()){
+//            val intent_to_scan_or_write = Intent(this, ActivityScanOrWrite::class.java)
+//            startActivity(intent_to_scan_or_write)
+//        }
 
-        var result = ""
-        for (position in list_positions){
-            result += position.toString()
-        }
-        textView.text = result
-    }
-
-    fun GetCheckFromAPI(text: String?): List<Item>{
         var list_positions: List<Item> = mutableListOf()
         val retrofit: RetrofitClient = RetrofitClient
         val scannerService: RetrofitServices = retrofit.getClient(
             "https://scanner-oleg.herokuapp.com").create(RetrofitServices::class.java)
-        if (text != null) {
-            scannerService.getCheck().enqueue(object : Callback<List<Item>>{
-                override fun onResponse(call: Call<List<Item>>, response: Response<List<Item>>) {
-                    list_positions = response.body()!!
+
+        scannerService.getCheck().enqueue(object : Callback<List<Item>>{
+            override fun onResponse(call: Call<List<Item>>, response: Response<List<Item>>) {
+                list_positions = response.body()!!
+                var result = ""
+                for (position in list_positions){
+                    result += position.toString()
                 }
-                override fun onFailure(call: Call<List<Item>>, t: Throwable) {
-                    throw Exception("SERVER ERROR")
-                    println("!!!! SERVER ERROR -----------------------------------")
-                }
-            })
-        }
-        return list_positions
+                //textView.text = result
+                println(result)
+            }
+            override fun onFailure(call: Call<List<Item>>, t: Throwable) {
+                throw Exception("SERVER ERROR")
+                println("!!!! SERVER ERROR -----------------------------------")
+            }
+        })
+
+
     }
+
+
+
+
 
     object RetrofitClient {
         private var retrofit: Retrofit? = null

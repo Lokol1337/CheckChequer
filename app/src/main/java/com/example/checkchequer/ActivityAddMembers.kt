@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-
 class ActivityAddMembers : AppCompatActivity() {
 
     private lateinit var array_members: MutableList<Member>
@@ -38,18 +37,23 @@ class ActivityAddMembers : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.activity_add_members_RV)
         recyclerView.layoutManager = linear_layout_manager
         recyclerView.adapter = members_adapter
+
+        members_adapter.addMember(this, true)
+        members_adapter.notifyItemChanged(members_adapter.itemCount - 1)
     }
 
     fun addNewMember(view: View) {
-        members_adapter.addMember(this)
+        members_adapter.addMember(this, false)
         members_adapter.notifyItemChanged(members_adapter.itemCount - 1)
     }
 
     fun deleteLastMember(view: View) {
-        //TODO(РЕАЛИЗОВАТЬ УДАЛЕНИЕ ПОСЛЕДНЕЙ КАРТОЧКИ)
+        //TODO(НЕ РАБОТАЕТ, когда на последнем элементе фокус -> нужно вставлять кнопку удаления в сам элемент)
+        members_adapter.deleteMember(this)
+        members_adapter.notifyItemRemoved(members_adapter.itemCount)
     }
 
-    fun buttonToASetStatus(view: View){
+    fun buttonToASetStatus(view: View) {
         val filesDir = this.filesDir.toString()
         val dataBaseHandler = DataBaseHandler(filesDir)
         dataBaseHandler.cleanDB()
@@ -62,6 +66,6 @@ class ActivityAddMembers : AppCompatActivity() {
 
 
     fun Int.toDp(context: Context): Int = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics
+            TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics
     ).toInt()
 }
