@@ -25,11 +25,6 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
     fun initComponents(){
         val textView = findViewById<TextView>(R.id.xer)
         val text: String = intent.getStringExtra("text").toString()
-//        val list_positions: List<Item> = GetCheckFromAPI(text)
-//        if (list_positions.isEmpty()){
-//            val intent_to_scan_or_write = Intent(this, ActivityScanOrWrite::class.java)
-//            startActivity(intent_to_scan_or_write)
-//        }
 
         var list_positions: List<Item> = mutableListOf()
         val retrofit: RetrofitClient = RetrofitClient

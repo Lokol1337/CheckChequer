@@ -128,10 +128,10 @@ class MembersAdapter(var array_members: MutableList<Member>, var button_next: Bu
                             "---- STATUS_MEMBER :: " + member.getStatus() + "\n" +
                             "---- NAME_MEMBER :: " + member.getName() + "\n" +
                             "---- FLAG_FILLED :: " + flag_filled_edit_texts + "\n" + context)
-                    this.name_edit_text.isFocusableInTouchMode = false;
-                    this.name_edit_text.isFocusable = false;
-                    this.name_edit_text.isFocusableInTouchMode = true;
-                    this.name_edit_text.isFocusable = true;
+                    this.name_edit_text.isFocusableInTouchMode = false
+                    this.name_edit_text.isFocusable = false
+                    this.name_edit_text.isFocusableInTouchMode = true
+                    this.name_edit_text.isFocusable = true
                     true
                 } else
                     false

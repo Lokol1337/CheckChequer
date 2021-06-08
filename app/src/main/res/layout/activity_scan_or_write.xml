@@ -4,49 +4,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityScanOrWrite"
     android:orientation="vertical"
-    android:paddingHorizontal="50dp"
-    android:paddingTop="40dp">
+    android:paddingTop="40dp"
+    tools:context=".ActivityScanOrWrite">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1">
-
-        <Button
-            android:id="@+id/activity_scan_or_write_button_scan"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="ОТСКАНИРОВАТЬ ЧЕК"
-            android:onClick="ButtonScan"/>
+            android:layout_marginBottom="5dp"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="5dp"
+            android:background="@drawable/custom_button_qr"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/activity_scan_or_write_edit_text_name_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Название товара"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"/>
+
+                <EditText
+                    android:id="@+id/activity_scan_or_write_edit_text_price_per_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:hint="Цена за 1 ед."
+                    android:imeOptions="actionDone"
+                    android:inputType="number"/>
+
+                <Spinner
+                    android:id="@+id/activity_scan_or_write_spinner_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:padding="5dp"
+                    android:entries="@array/count"
+                    android:background="@drawable/custom_button_qr"/>
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/red"
+                android:text="ДОБАВИТЬ ПОЗИЦИЮ"
+                android:textColor="@color/white"
+                android:onClick="ButtonAddProduct"/>
+
+            <TextView
+                android:id="@+id/activity_scan_or_write_text_view_adding_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/darkRed"/>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="15dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
             android:text="или"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="15dp"/>
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/activity_scan_or_write_button_write"
+
+            android:id="@+id/activity_scan_or_write_button_scan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ВВЕСТИ ЧЕК ВРУЧНУЮ"/>
+            android:paddingHorizontal="25dp"
+            android:background="@drawable/custom_button_qr"
+            android:text="ОТСКАНИРОВАТЬ ЧЕК ПОЛНОСТЬЮ"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:onClick="ButtonScan"/>
+
     </LinearLayout>
 
-    <LinearLayout
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:paddingHorizontal="15dp"
+            android:text="СПИСОК ТОВАРОВ:"
+            android:textSize="10pt"
+            android:textColor="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:paddingHorizontal="15dp"
+            android:layout_marginBottom="15dp">
+
+            <ListView
+                android:id="@+id/activity_scan_or_write_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    <Button
+        android:id="@+id/activity_scan_or_write_button_next"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_marginHorizontal="15dp"
+        android:padding="15dp"
+        android:background="@color/red"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:text="ДАЛЕЕ"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:onClick="ButtonNext"/>
 
 </LinearLayout>
