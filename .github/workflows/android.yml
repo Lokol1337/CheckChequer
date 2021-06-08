@@ -9,10 +9,10 @@ jobs:
         run: |
           cd D:
           cd D:/CheckChequer 
-          .\gradlew --status
+          chmod +x ./gradlew
+          .\gradlew assembleRelease
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
           name: app-release-unsigned.apk
           path: D:/CheckChequer/app/build/outputs/apk/release/
-          
