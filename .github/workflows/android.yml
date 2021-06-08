@@ -9,9 +9,8 @@ jobs:
         run: |
           cd D:
           cd D:/CheckChequer 
-          echo %JAVA_HOME%
           .\gradlew build
-          .\gradlew assembleRelease
+          .\gradlew test
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
