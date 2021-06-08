@@ -37,6 +37,7 @@ class ActivityAddMembers : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.activity_add_members_RV)
         recyclerView.layoutManager = linear_layout_manager
         recyclerView.adapter = members_adapter
+        val gogog = gvamwe->skmfew;
 
     }
 
