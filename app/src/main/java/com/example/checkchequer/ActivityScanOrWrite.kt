@@ -24,6 +24,7 @@ class ActivityScanOrWrite : AppCompatActivity() {
     lateinit var spinnerCount: Spinner
     lateinit var buttonNext: Button
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_or_write)
@@ -34,11 +35,7 @@ class ActivityScanOrWrite : AppCompatActivity() {
         listView = findViewById<ListView>(R.id.activity_scan_or_write_list_view)
         adapter = ArrayAdapter<String>(this, R.layout.simple_list_item_1, str_array_products_1)
         listView.adapter = adapter
-
-        listView.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, position, l ->
-            val product = adapter.getItem(position)
-
-        })
+        listView.isClickable = false
 
         editTextNameProduct = findViewById<EditText>(R.id.activity_scan_or_write_edit_text_name_product)
         editTextPriceProduct = findViewById<EditText>(R.id.activity_scan_or_write_edit_text_price_per_1)
@@ -113,6 +110,7 @@ class ActivityScanOrWrite : AppCompatActivity() {
     }
 
     fun ButtonScan(view: View){
+        //TODO(РЕАЛИЗОВАТЬ ПРОВЕРКУ НА ИНТЕРНЕТ)
         val scanner = IntentIntegrator(this)
         scanner.initiateScan()
     }
@@ -137,7 +135,10 @@ class ActivityScanOrWrite : AppCompatActivity() {
     }
 
     fun ButtonNext(view: View){
-
+        val intent = Intent(this, ActivityProductsAndMembers::class.java)
+        val productsJSON = ProductsJSON()
+        intent.putExtra("array-products", productsJSON.convertProductToJson(array_products))
+        startActivity(intent)
     }
 
 }

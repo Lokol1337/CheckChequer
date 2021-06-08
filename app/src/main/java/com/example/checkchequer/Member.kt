@@ -6,6 +6,8 @@ class Member {
     private var _status: Boolean
     private var _summ: Int
 
+    var _products: MutableList<Product> = mutableListOf()
+
     init {
         _name = ""
         _status = false
@@ -37,6 +39,10 @@ class Member {
         return _summ
     }
 
+    fun getArrayProducts(): MutableList<Product>{
+        return _products
+    }
+
 
     //SETTER'S
     fun setName(name: String) {
@@ -49,6 +55,10 @@ class Member {
 
     fun setSumm(summ: Int) {
         this._summ = summ
+    }
+
+    fun setArrayProducts(products: MutableList<Product>){
+        this._products = products
     }
 
 }

@@ -27,6 +27,13 @@ class DataBaseHandler {
             val summ: Int
     )
 
+    data class ProductJSON(
+            val name: String,
+            val price: Int,
+            val count: Int,
+            val summ: Int
+    )
+
 
     var MEMBERS_DATABASE_NAME: String
     var FILE_DIRECTORY: File
@@ -56,19 +63,6 @@ class DataBaseHandler {
             } catch (e: Exception) {
                 println("---- SMALL ERROR")
             }
-
-        /*if (inputAsString == "" || inputAsString.isEmpty()){
-            MEETING_LIST = mapper.readValue(inputAsString)
-            MEMBER_LIST = MEETING_LIST[0].arrayMembers
-        }*/
-
-        /*try {
-            MEETING_LIST = mapper.readValue(inputAsString)
-            MEMBER_LIST = MEETING_LIST[0].arrayMembers
-        } catch (e: Exception) {
-            //e.printStackTrace()
-            print("---- SMALL ERROR")
-        }*/
     }
 
     fun writeTOFile(str: String) {
@@ -167,5 +161,37 @@ class DataBaseHandler {
         }
         return str
     }
+}
 
+class ProductsJSON {
+
+    constructor(){}
+
+    fun convertProductToJson(arrayProducts: MutableList<Product>): String{
+        if (arrayProducts.size == 0)
+            return ""
+
+        val arrayProductsJSON: MutableList<DataBaseHandler.ProductJSON> = mutableListOf()
+        for (product in arrayProducts){
+            val prdctJSON = DataBaseHandler.ProductJSON(product.getName(), product.getPrice(), product.getCount(), product.getSumm())
+            arrayProductsJSON.add(prdctJSON)
+        }
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        return gsonPretty.toJson(arrayProductsJSON)
+    }
+
+    fun convertProductToArray(json: String): MutableList<Product>{
+        if (json.isEmpty())
+            return mutableListOf()
+
+        val gson = Gson()
+        val mutableListTutorialTypeProduct = object : TypeToken<MutableList<DataBaseHandler.ProductJSON>>() {}.type
+        val arrayProductsJSON: MutableList<DataBaseHandler.ProductJSON> = gson.fromJson(json, mutableListTutorialTypeProduct)
+
+        val arrayProducts: MutableList<Product> = mutableListOf()
+        for (productJSON in arrayProductsJSON){
+            arrayProducts.add(Product(productJSON.name, productJSON.price, productJSON.count))
+        }
+        return arrayProducts
+    }
 }

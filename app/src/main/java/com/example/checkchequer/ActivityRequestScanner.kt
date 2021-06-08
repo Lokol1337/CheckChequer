@@ -26,7 +26,7 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.xer)
         val text: String = intent.getStringExtra("text").toString()
 
-        var list_positions: List<Item> = mutableListOf()
+        /*var list_positions: List<Item> = mutableListOf()
         val retrofit: RetrofitClient = RetrofitClient
         val scannerService: RetrofitServices = retrofit.getClient(
             "https://scanner-oleg.herokuapp.com").create(RetrofitServices::class.java)
@@ -45,7 +45,7 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
                 throw Exception("SERVER ERROR")
                 println("!!!! SERVER ERROR -----------------------------------")
             }
-        })
+        })*/
 
 
     }
@@ -54,7 +54,7 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
 
 
 
-    object RetrofitClient {
+    /*object RetrofitClient {
         private var retrofit: Retrofit? = null
 
         fun getClient(baseUrl: String): Retrofit {
@@ -71,11 +71,12 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
     interface RetrofitServices {
         @GET("/check")
         fun getCheck(): Call<List<Item>>
-    }
+    }*/
 
 }
 
 
+/*
 class Item {
     var sum: Int? = null
     var price: Int? = null
@@ -85,4 +86,4 @@ class Item {
     override fun toString(): String {
         return "Name = $name :\n\tSum = $sum\n\tPrice = $price\n\tQuantity = $quantity"
     }
-}
+}*/

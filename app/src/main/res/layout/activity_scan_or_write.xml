@@ -90,7 +90,7 @@
             android:id="@+id/activity_scan_or_write_button_scan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="25dp"
+            android:paddingHorizontal="35dp"
             android:background="@drawable/custom_button_qr"
             android:text="ОТСКАНИРОВАТЬ ЧЕК ПОЛНОСТЬЮ"
             android:textStyle="bold"
