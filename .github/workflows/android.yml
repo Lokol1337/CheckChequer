@@ -3,7 +3,7 @@ on:
   push:
 jobs:
   build-android:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps: 
       - name: Build Android Release
         run: |
