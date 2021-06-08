@@ -8,11 +8,6 @@ jobs:
       - name: Build Android Release
         run: |
           dir
-          cd D:
-          cd D:/CheckChequer
-          echo %JAVA_HOME%
-          .\gradlew build
-          .\gradlew assembleRelease
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
