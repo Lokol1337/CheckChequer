@@ -7,7 +7,7 @@ jobs:
     steps: 
       - name: Build Android Release
         run: |
-          C:
+          D:
           dir
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
