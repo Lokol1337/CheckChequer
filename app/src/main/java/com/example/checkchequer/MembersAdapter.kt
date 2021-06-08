@@ -46,6 +46,7 @@ class MembersAdapter(var array_members: MutableList<Member>, var button_next: Bu
         array_members.add(Member("", false))
         flag_filled_edit_texts = false
         setButtonNPClickable(context, false)
+        23j3roin3frem->owpj3mnqflx,
     }
 
     fun setButtonNPClickable(context: Context, flag: Boolean) {
