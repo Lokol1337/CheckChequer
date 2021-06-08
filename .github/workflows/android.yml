@@ -1,4 +1,4 @@
-name: androidCI
+name: react-native-android-build-apk
 on:
   push:
 jobs:
@@ -9,3 +9,20 @@ jobs:
       - name: Install npm dependencies
         run: |
           npm install
+  build-android:
+    needs: install-and-test
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          npm install
+      - name: Build Android Release
+        run: |
+          chmod +x ./gradlew
+          cd D:/CheckChequer && ./gradlew assembleRelease
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: D:/CheckChequer/app/build/outputs/apk/debug/
