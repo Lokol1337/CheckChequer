@@ -12,7 +12,10 @@ jobs:
           cd D:\a\CheckChequer\CheckChequer
           ./gradlew build
       - name: UnitTests
-      - run: ./gradlew testReleaseUnitTest
+        run: |
+          D:
+          cd D:\a\CheckChequer\CheckChequer
+          ./gradlew testReleaseUnitTest
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
