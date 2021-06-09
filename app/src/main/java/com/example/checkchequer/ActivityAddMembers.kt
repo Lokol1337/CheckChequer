@@ -2,11 +2,16 @@ package com.example.checkchequer
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +21,8 @@ class ActivityAddMembers : AppCompatActivity() {
     private lateinit var array_members: MutableList<Member>
     private lateinit var members_adapter: MembersAdapter
     private lateinit var button_next: Button
+    private lateinit var button_delete: ImageView
+    private var flag_clear_focus: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,9 +34,16 @@ class ActivityAddMembers : AppCompatActivity() {
     private fun initComponents() {
         button_next = findViewById(R.id.activity_add_members_button_next)
         button_next.setBackgroundColor(ContextCompat.getColor(this, R.color.light_grey))
+        button_delete = findViewById(R.id.activity_add_members_button_delete)
+        button_delete.setOnClickListener(View.OnClickListener {
+            members_adapter.deleteMember(this)
+            members_adapter.notifyItemRemoved(members_adapter.itemCount)
+        })
+
+        val linearLayout = findViewById<LinearLayout>(R.id.activity_add_members_linear_layout_main)
 
         array_members = mutableListOf()
-        members_adapter = MembersAdapter(array_members, button_next)
+        members_adapter = MembersAdapter(linearLayout, array_members, button_next, button_delete)
 
         val linear_layout_manager = LinearLayoutManager(this)
         linear_layout_manager.orientation = LinearLayoutManager.VERTICAL
@@ -40,6 +54,30 @@ class ActivityAddMembers : AppCompatActivity() {
 
         members_adapter.addMember(this, true)
         members_adapter.notifyItemChanged(members_adapter.itemCount - 1)
+
+
+
+        /*val linearLayout = findViewById<LinearLayout>(R.id.activity_add_members_linear_layout_main)
+        linearLayout.viewTreeObserver.addOnGlobalLayoutListener(
+            object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+
+                    val r = Rect()
+                    linearLayout.getWindowVisibleDisplayFrame(r)
+                    val screenHeight: Int = linearLayout.getRootView().getHeight()
+
+                    val keypadHeight: Int = screenHeight - r.bottom
+
+                    if (keypadHeight > screenHeight * 0.15) {
+                        // keyboard is opened
+                        Log.e("ActivityAddMembers", "keyboard opened")
+                    } else {
+                        // keyboard is closed
+                        Log.e("ActivityAddMembers", "keyboard closed")
+                        flag_clear_focus = true
+                    }
+                }
+            })*/
     }
 
     fun addNewMember(view: View) {
@@ -63,6 +101,6 @@ class ActivityAddMembers : AppCompatActivity() {
 
 
     fun Int.toDp(context: Context): Int = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics
+        TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics
     ).toInt()
 }

@@ -1,20 +1,24 @@
 package com.example.checkchequer
 
 import android.content.Context
+import android.graphics.Rect
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 
-class MembersAdapter(var array_members: MutableList<Member>, var button_next: Button)
+class MembersAdapter(val linearLayout: LinearLayout, var array_members: MutableList<Member>, var button_next: Button, var button_delete: ImageView)
     : RecyclerView.Adapter<MembersAdapter.MemberViewHolder>() {
 
     private var flag_filled_edit_texts: Boolean = false
@@ -36,6 +40,7 @@ class MembersAdapter(var array_members: MutableList<Member>, var button_next: Bu
 
     override fun onBindViewHolder(holder: MemberViewHolder, position: Int) {
         holder.bind(this.array_members[position])
+        println("----------------------  $position")
     }
 
     override fun getItemCount(): Int {
@@ -84,6 +89,7 @@ class MembersAdapter(var array_members: MutableList<Member>, var button_next: Bu
         }
 
         fun bind(member: Member) {
+
             if (member.getStatus()) {
                 this.status_button.setImageResource(R.drawable.money)
                 this.name_edit_text.hint = "Оплативший"
@@ -94,22 +100,38 @@ class MembersAdapter(var array_members: MutableList<Member>, var button_next: Bu
 
             checkFields()
 
-            /*this.name_edit_text.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable) {
-                    // Прописываем то, что надо выполнить после изменения текста
-                }
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    if (s.isEmpty())
-                        setButtonNPClickable(context, false)
-                }
-            })*/
-
             this.name_edit_text.setOnFocusChangeListener { view, hasFocus ->
                 if (hasFocus) {
+                    button_delete.isClickable = false
                     setButtonNPClickable(context, false)
+                    linearLayout.viewTreeObserver.addOnGlobalLayoutListener(
+                        object : ViewTreeObserver.OnGlobalLayoutListener {
+                            override fun onGlobalLayout() {
+
+                                val r = Rect()
+                                linearLayout.getWindowVisibleDisplayFrame(r)
+                                val screenHeight: Int = linearLayout.getRootView().getHeight()
+
+                                val keypadHeight: Int = screenHeight - r.bottom
+
+                                if (keypadHeight > screenHeight * 0.15) {
+                                    // keyboard is opened
+                                    Log.e("ActivityAddMembers", "keyboard opened")
+                                } else {
+                                    // keyboard is closed
+                                    Log.e("ActivityAddMembers", "keyboard closed")
+                                    view.isFocusable = false
+                                    view.isFocusableInTouchMode = false
+                                    view.isFocusable = true
+                                    view.isFocusableInTouchMode = true
+                                }
+                            }
+                        })
+                    //flag_edit_text_focus = true
                 }
                 else {
+                    button_delete.isClickable = true
+                    //flag_edit_text_focus = true
                     if (member.getName() != this.name_edit_text.text.toString())
                         member.setName(this.name_edit_text.text.toString())
                     checkFields()

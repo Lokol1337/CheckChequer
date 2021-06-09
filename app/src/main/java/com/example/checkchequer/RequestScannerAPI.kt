@@ -56,7 +56,7 @@ class RequestScannerAPI {
 
 }
 
-class Item {
+/*class Item {
     var sum: Int? = null
     var price: Int? = null
     var quantity: Int? = null
@@ -65,4 +65,4 @@ class Item {
     override fun toString(): String {
         return "Name = $name :\n\tSum = $sum\n\tPrice = $price\n\tQuantity = $quantity"
     }
-}
+}*/
