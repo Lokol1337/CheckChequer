@@ -74,19 +74,6 @@ class DataBaseHandler {
         writer.close()
     }
 
-    fun getAllMeetings(): MutableList<Meeting>{
-        var meetings: MutableList<Meeting> = mutableListOf()
-        val jsonStr: String = FileInputStream(FILE).bufferedReader().use { it.readText() }
-        if (jsonStr.isNotEmpty()) {
-            try {
-                meetings = _gson.fromJson(jsonStr, mutableListTutorialType)
-            } catch (e: Exception) {
-                println("---- SMALL ERROR")
-            }
-        }
-        return meetings
-    }
-
     fun addMeeting(members: MutableList<Member>) {
         val sdf = SimpleDateFormat("yyyy-MM-dd' 'HH:mm")
         MEETING_LIST.add(Meeting(MEETING_LIST.size, sdf.format(Date()), 0, mutableListOf<MemberJSON>(), ""))
@@ -134,8 +121,31 @@ class DataBaseHandler {
 
     fun addStringOutput(str: String){
         MEETING_LIST[MEETING_LIST.size-1].stringOutput = str
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
+        writeTOFile(jsonTutsArrayPretty)
     }
 
+
+    //GETTERS
+    fun getMeeting(id: Int): Meeting{
+        if (id < MEETING_LIST.size)
+            return MEETING_LIST[id]
+        return Meeting(-1,"",0, mutableListOf(),"")
+    }
+
+    fun getAllMeetings(): MutableList<Meeting>{
+        var meetings: MutableList<Meeting> = mutableListOf()
+        val jsonStr: String = FileInputStream(FILE).bufferedReader().use { it.readText() }
+        if (jsonStr.isNotEmpty()) {
+            try {
+                meetings = _gson.fromJson(jsonStr, mutableListTutorialType)
+            } catch (e: Exception) {
+                println("---- SMALL ERROR")
+            }
+        }
+        return meetings
+    }
 
     fun getCountMembers(): Int {
         if (MEETING_LIST.size != 0)
@@ -178,6 +188,9 @@ class DataBaseHandler {
         }
         return listMembers
     }
+
+
+    //OTHERS FUNCTIONS
 
     fun memberIsExist(member: Member): Boolean {
         for (m: MemberJSON in MEETING_LIST[MEETING_LIST.size-1].arrayMembers) {

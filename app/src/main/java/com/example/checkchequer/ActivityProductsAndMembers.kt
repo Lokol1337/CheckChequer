@@ -47,14 +47,25 @@ class ActivityProductsAndMembers : AppCompatActivity() {
             val arrayMembersBoolean: MutableList<Boolean> = mutableListOf()
             val str_arrayMembers: MutableList<String> = mutableListOf()
             for (i in 0 until arrayMembers.size){
-                arrayMembersBoolean.add(false)
                 str_arrayMembers.add(arrayMembers[i].getName())
+                if (isInArray(arrayMembers[i], arrayProducts[position])){
+                    arrayMembersBoolean.add(true)
+                } else
+                    arrayMembersBoolean.add(false)
             }
             val myDialogFragment = MyDialogFragment(arrayMembers, arrayProducts, arrayMembersBoolean, str_arrayMembers, position)
             val manager: FragmentManager = supportFragmentManager
             val transaction: FragmentTransaction = manager.beginTransaction()
             myDialogFragment.show(transaction, "dialog")
         })
+    }
+
+    fun isInArray(member: Member, product: Product): Boolean{
+        for (pr in member.getArrayProducts()) {
+            if (product.getName() == pr.getName())
+                return true
+        }
+        return false
     }
 
     fun ButtonNext(view: View){
@@ -79,38 +90,6 @@ class ActivityProductsAndMembers : AppCompatActivity() {
         }
         return result
     }
-
-    /*private class MyCustomAdapter(context: Context, ): BaseAdapter() {
-
-        private val mContext: Context
-
-        init {
-            mContext = context
-        }
-
-        // responsible for how many rows in my list
-        override fun getCount(): Int {
-            return 5
-        }
-
-        // you can also ignore this
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        // you can ignore this for now
-        override fun getItem(position: Int): Any {
-            return "TEST STRING"
-        }
-
-        // responsible for rendering out each row
-        override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
-            val textView = TextView(mContext)
-            textView.text =
-            return textView
-        }
-
-    }*/
 }
 
 class MyDialogFragment(
