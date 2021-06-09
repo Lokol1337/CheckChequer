@@ -98,12 +98,19 @@ class DataBaseHandler {
     }
 
     fun addMember(member: Member) {
-        val m = MemberJSON(member.getName(), member.getStatus(), member.getSumm())
-        MEETING_LIST[MEETING_LIST.size-1].arrayMembers.add(m)
-        MEETING_LIST[MEETING_LIST.size-1].countMembers++
-        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
-        val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
-        writeTOFile(jsonTutsArrayPretty)
+        if (MEETING_LIST.size != 0) {
+            val m = MemberJSON(member.getName(), member.getStatus(), member.getSumm())
+            MEETING_LIST[MEETING_LIST.size - 1].arrayMembers.add(m)
+            MEETING_LIST[MEETING_LIST.size - 1].countMembers++
+            val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+            val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
+            writeTOFile(jsonTutsArrayPretty)
+        }
+        else {
+            val arrayM: MutableList<Member> = mutableListOf()
+            arrayM.add(member)
+            addMeeting(arrayM)
+        }
 
         /*MEETING_LIST[0].arrayMembers.add(m)
         val jsonArray = mapper.writeValueAsString(MEETING_LIST)
@@ -111,7 +118,7 @@ class DataBaseHandler {
     }
 
     fun addMembers(members: MutableList<Member>) {
-        if (members.size != 0) {
+        if (members.size != 0 && MEETING_LIST.size != 0) {
             for (member: Member in members) {
                 val m = MemberJSON(member.getName(), member.getStatus(), member.getSumm())
                 MEETING_LIST[MEETING_LIST.size-1].arrayMembers.add(m)
@@ -120,6 +127,8 @@ class DataBaseHandler {
             val gsonPretty = GsonBuilder().setPrettyPrinting().create()
             val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
             writeTOFile(jsonTutsArrayPretty)
+        } else if (members.size != 0){
+            addMeeting(members)
         }
     }
 
@@ -129,7 +138,9 @@ class DataBaseHandler {
 
 
     fun getCountMembers(): Int {
-        return MEETING_LIST[MEETING_LIST.size-1].countMembers
+        if (MEETING_LIST.size != 0)
+            return MEETING_LIST[MEETING_LIST.size-1].countMembers
+        return 0
     }
 
     fun getMember(id: Int): Member {

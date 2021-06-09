@@ -1,5 +1,6 @@
 package com.example.checkchequer
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,7 @@ import java.lang.AssertionError
 class ActivityRequestScannerAPI : AppCompatActivity() {
 
 //    private lateinit var scannerService: RetrofitServices
+    lateinit var context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,10 +25,12 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
     }
 
     fun initComponents(){
+        context = this
+
         val textView = findViewById<TextView>(R.id.xer)
         val text: String = intent.getStringExtra("text").toString()
 
-        /*var list_positions: List<Item> = mutableListOf()
+        var list_positions: List<Item> = mutableListOf()
         val retrofit: RetrofitClient = RetrofitClient
         val scannerService: RetrofitServices = retrofit.getClient(
             "https://scanner-oleg.herokuapp.com").create(RetrofitServices::class.java)
@@ -40,21 +44,29 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
                 }
                 //textView.text = result
                 println(result)
+
+                val arrayProducts: MutableList<Product> = mutableListOf()
+                for (item in list_positions){
+                    arrayProducts.add(Product(item.name, item.price, item.quantity.toFloat(), item.sum))
+                }
+
+                val intent = Intent(context, ActivityProductsAndMembers::class.java)
+                val productsJSON = ProductsJSON()
+                //val path: String = intent.getStringExtra("path").toString()
+                intent.putExtra("array-products", productsJSON.convertProductToJson(arrayProducts))
+                startActivity(intent)
             }
             override fun onFailure(call: Call<List<Item>>, t: Throwable) {
                 throw Exception("SERVER ERROR")
                 println("!!!! SERVER ERROR -----------------------------------")
             }
-        })*/
+        })
 
 
     }
 
 
-
-
-
-    /*object RetrofitClient {
+    object RetrofitClient {
         private var retrofit: Retrofit? = null
 
         fun getClient(baseUrl: String): Retrofit {
@@ -71,19 +83,18 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
     interface RetrofitServices {
         @GET("/check")
         fun getCheck(): Call<List<Item>>
-    }*/
+    }
 
 }
 
 
-/*
 class Item {
-    var sum: Int? = null
-    var price: Int? = null
-    var quantity: Int? = null
+    var sum: Int = 0
+    var price: Int = 0
+    var quantity: Int = 0
     var name: String = ""
 
     override fun toString(): String {
         return "Name = $name :\n\tSum = $sum\n\tPrice = $price\n\tQuantity = $quantity"
     }
-}*/
+}
