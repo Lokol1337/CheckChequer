@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initComponents() {
-        val db = DataBaseHandler(filesDir.toString())
-        db.cleanDB()
+        /*val db = DataBaseHandler(filesDir.toString())
+        db.cleanDB()*/
         val dataBaseHandler = DataBaseHandler(filesDir.toString())
         val meetingList: MutableList<DataBaseHandler.Meeting> = dataBaseHandler.getAllMeetings()
         for (meeting in meetingList){

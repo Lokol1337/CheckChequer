@@ -89,7 +89,7 @@ class DataBaseHandler {
 
     fun addMeeting(members: MutableList<Member>) {
         val sdf = SimpleDateFormat("yyyy-MM-dd' 'HH:mm")
-        MEETING_LIST.add(Meeting(MEETING_LIST.size, sdf.format(Date()), members.size, mutableListOf<MemberJSON>(), ""))
+        MEETING_LIST.add(Meeting(MEETING_LIST.size, sdf.format(Date()), 0, mutableListOf<MemberJSON>(), ""))
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
         writeTOFile(jsonTutsArrayPretty)
