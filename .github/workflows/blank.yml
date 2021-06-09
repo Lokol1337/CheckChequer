@@ -6,12 +6,17 @@ jobs:
     runs-on: windows-latest
     steps: 
       - uses: actions/checkout@v2
-      - name: Build Android Release
+      - name: findFoldar
         run: |
           D:
           cd D:\a\CheckChequer\CheckChequer
-          ./gradlew build
-          ./gradlew testReleaseUnitTest
+          
+      - name: Build
+      - run: ./gradlew build
+      
+      - name: UnitTests
+      - run: ./gradlew testReleaseUnitTest
+      
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
