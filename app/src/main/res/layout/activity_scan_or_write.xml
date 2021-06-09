@@ -5,25 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="40dp"
+    android:paddingTop="35dp"
     tools:context=".ActivityScanOrWrite">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp"
+        android:gravity="center"
+        android:text="ДОБАВЛЕНИЕ ПОЗИЦИЙ С ЧЕКА"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="22sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="5dp"
             android:paddingHorizontal="15dp"
             android:paddingVertical="5dp"
             android:background="@drawable/custom_button_qr"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ДОБАВЛЕНИЕ ПОЗИЦИЙ С ЧЕКА"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="22sp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -111,7 +114,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:layout_marginBottom="10dp"
             android:paddingHorizontal="15dp"
             android:text="СПИСОК ТОВАРОВ:"

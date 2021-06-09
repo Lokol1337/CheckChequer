@@ -56,7 +56,6 @@ class ActivityAddMembers : AppCompatActivity() {
     fun buttonToASetStatus(view: View) {
         val filesDir = filesDir.toString()
         val dataBaseHandler = DataBaseHandler(filesDir)
-        dataBaseHandler.cleanDB()
         dataBaseHandler.addMeeting(array_members)
         val toASetStatus = Intent(this, ActivityScanOrWrite::class.java)
         startActivity(toASetStatus)

@@ -64,8 +64,8 @@ class DataBaseHandler {
                 println("---- SMALL ERROR")
             }
         }
-        else
-            addMeeting(mutableListOf())
+        /*else
+            addMeeting(mutableListOf())*/
     }
 
     fun writeTOFile(str: String) {
@@ -74,20 +74,33 @@ class DataBaseHandler {
         writer.close()
     }
 
-    fun getAllMeetings(){
-
+    fun getAllMeetings(): MutableList<Meeting>{
+        var meetings: MutableList<Meeting> = mutableListOf()
+        val jsonStr: String = FileInputStream(FILE).bufferedReader().use { it.readText() }
+        if (jsonStr.isNotEmpty()) {
+            try {
+                meetings = _gson.fromJson(jsonStr, mutableListTutorialType)
+            } catch (e: Exception) {
+                println("---- SMALL ERROR")
+            }
+        }
+        return meetings
     }
 
     fun addMeeting(members: MutableList<Member>) {
-        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm")
+        val sdf = SimpleDateFormat("yyyy-MM-dd' 'HH:mm")
         MEETING_LIST.add(Meeting(MEETING_LIST.size, sdf.format(Date()), members.size, mutableListOf<MemberJSON>(), ""))
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
+        writeTOFile(jsonTutsArrayPretty)
         addMembers(members)
+
     }
 
     fun addMember(member: Member) {
         val m = MemberJSON(member.getName(), member.getStatus(), member.getSumm())
-        MEETING_LIST[0].arrayMembers.add(m)
-        MEETING_LIST[0].countMembers++
+        MEETING_LIST[MEETING_LIST.size-1].arrayMembers.add(m)
+        MEETING_LIST[MEETING_LIST.size-1].countMembers++
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
         writeTOFile(jsonTutsArrayPretty)
@@ -101,8 +114,8 @@ class DataBaseHandler {
         if (members.size != 0) {
             for (member: Member in members) {
                 val m = MemberJSON(member.getName(), member.getStatus(), member.getSumm())
-                MEETING_LIST[0].arrayMembers.add(m)
-                MEETING_LIST[0].countMembers++
+                MEETING_LIST[MEETING_LIST.size-1].arrayMembers.add(m)
+                MEETING_LIST[MEETING_LIST.size-1].countMembers++
             }
             val gsonPretty = GsonBuilder().setPrettyPrinting().create()
             val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
@@ -111,26 +124,26 @@ class DataBaseHandler {
     }
 
     fun addStringOutput(str: String){
-        MEETING_LIST[0].stringOutput = str
+        MEETING_LIST[MEETING_LIST.size-1].stringOutput = str
     }
 
 
     fun getCountMembers(): Int {
-        return MEETING_LIST[0].countMembers
+        return MEETING_LIST[MEETING_LIST.size-1].countMembers
     }
 
     fun getMember(id: Int): Member {
         val member: Member = Member()
-        member.setName(MEETING_LIST[0].arrayMembers[id].name)
-        member.setStatus(MEETING_LIST[0].arrayMembers[id].status)
-        member.setSumm(MEETING_LIST[0].arrayMembers[id].summ)
+        member.setName(MEETING_LIST[MEETING_LIST.size-1].arrayMembers[id].name)
+        member.setStatus(MEETING_LIST[MEETING_LIST.size-1].arrayMembers[id].status)
+        member.setSumm(MEETING_LIST[MEETING_LIST.size-1].arrayMembers[id].summ)
         return member
     }
 
     fun getMember(name: String): Member? {
         var id = -1
         var count = 1
-        for (member: MemberJSON in MEETING_LIST[0].arrayMembers) {
+        for (member: MemberJSON in MEETING_LIST[MEETING_LIST.size-1].arrayMembers) {
             if (member.name == name) {
                 id = count
                 break
@@ -147,16 +160,16 @@ class DataBaseHandler {
         val listMembers: MutableList<Member> = mutableListOf()
         for (i: Int in 0 until getCountMembers()) {
             val member: Member = Member()
-            member.setName(MEETING_LIST[0].arrayMembers[i].name)
-            member.setStatus(MEETING_LIST[0].arrayMembers[i].status)
-            member.setSumm(MEETING_LIST[0].arrayMembers[i].summ)
+            member.setName(MEETING_LIST[MEETING_LIST.size-1].arrayMembers[i].name)
+            member.setStatus(MEETING_LIST[MEETING_LIST.size-1].arrayMembers[i].status)
+            member.setSumm(MEETING_LIST[MEETING_LIST.size-1].arrayMembers[i].summ)
             listMembers.add(member)
         }
         return listMembers
     }
 
     fun memberIsExist(member: Member): Boolean {
-        for (m: MemberJSON in MEETING_LIST[0].arrayMembers) {
+        for (m: MemberJSON in MEETING_LIST[MEETING_LIST.size-1].arrayMembers) {
             if (m.name == member.getName() && m.status == member.getStatus() && m.summ == member.getSumm())
                 return true
         }
@@ -167,7 +180,7 @@ class DataBaseHandler {
         writeTOFile("")
         MEETING_LIST = mutableListOf<Meeting>()
         MEMBER_LIST = mutableListOf<MemberJSON>()
-        addMeeting(mutableListOf())
+        //addMeeting(mutableListOf())
     }
 
     fun stringAllUsers(): String {

@@ -9,7 +9,7 @@ import android.widget.ListView
 
 class MainActivity : AppCompatActivity() {
 
-    var str_array_products_1: MutableList<String> = mutableListOf()
+    var str_array_meeting: MutableList<String> = mutableListOf()
     lateinit var listView: ListView
     lateinit var adapter: ArrayAdapter<String>
 
@@ -20,12 +20,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initComponents() {
-        /*val dataBaseHandler: DataBaseHandler = DataBaseHandler(filesDir.toString())
+        val db = DataBaseHandler(filesDir.toString())
+        db.cleanDB()
+        val dataBaseHandler = DataBaseHandler(filesDir.toString())
+        val meetingList: MutableList<DataBaseHandler.Meeting> = dataBaseHandler.getAllMeetings()
+        for (meeting in meetingList){
+            str_array_meeting.add((meeting.id + 1).toString() + ": " + meeting.date)
+        }
 
         listView = findViewById<ListView>(R.id.activity_main_list_view)
-        adapter = ArrayAdapter<String>(this, R.layout.simple_list_item_1, str_array_products_1)
+        adapter = ArrayAdapter<String>(this, R.layout.simple_list_item, str_array_meeting)
         listView.adapter = adapter
-        listView.isClickable = false*/
+        listView.isClickable = false
     }
 
     fun buttonCreatingMeeting(view: View){
