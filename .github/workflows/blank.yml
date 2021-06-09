@@ -10,4 +10,10 @@ jobs:
         run: |
           D:
           cd D:\a\CheckChequer\CheckChequer
+          ./gradlew build
           ./gradlew testReleaseUnitTest
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-debug.apk
+          path: D:\a\CheckChequer\CheckChequer/app/build/outputs/apk/debug/
