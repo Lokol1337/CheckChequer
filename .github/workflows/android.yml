@@ -10,7 +10,7 @@ jobs:
       - name: Build Android Release
         run: |
           cd /home/runner/work/CheckChequer/CheckChequer
-          .\gradle build
+          ls
 #       - name: Upload Artifact
 #         uses: actions/upload-artifact@v1
 #         with:
