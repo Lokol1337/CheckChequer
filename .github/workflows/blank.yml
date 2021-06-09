@@ -10,13 +10,10 @@ jobs:
         run: |
           D:
           cd D:\a\CheckChequer\CheckChequer
-          
       - name: Build
       - run: ./gradlew build
-      
       - name: UnitTests
       - run: ./gradlew testReleaseUnitTest
-      
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
