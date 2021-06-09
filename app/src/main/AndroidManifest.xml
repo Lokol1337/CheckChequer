@@ -11,12 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ActivityResult"></activity>
-        <activity android:name=".ActivityProductsAndMembers" />
-        <activity android:name=".ActivityRequestScannerAPI" />
-        <activity android:name=".ActivityScanOrWrite" />
-        <activity android:name=".ActivityAddMembers" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ActivityResult" android:screenOrientation="portrait"></activity>
+        <activity android:name=".ActivityProductsAndMembers" android:screenOrientation="portrait"/>
+        <activity android:name=".ActivityRequestScannerAPI" android:screenOrientation="portrait"/>
+        <activity android:name=".ActivityScanOrWrite" android:screenOrientation="portrait"/>
+        <activity android:name=".ActivityAddMembers" android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
