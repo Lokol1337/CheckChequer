@@ -3,17 +3,17 @@ on:
   push:
 jobs:
   build-android:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps: 
+      - uses: actions/checkout@v2
+      - run: npm install
       - name: Build Android Release
         run: |
-          cd D:
-          cd D:/CheckChequer 
-          .\gradlew build
-          .\gradlew test
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: app-release-unsigned.apk
-          path: D:/CheckChequer/app/build/outputs/apk/release/
+          cd /home/runner/work/CheckChequer/CheckChequer
+          .\gradle build
+#       - name: Upload Artifact
+#         uses: actions/upload-artifact@v1
+#         with:
+#           name: app-release-unsigned.apk
+#           path: D:/CheckChequer/app/build/outputs/apk/release/
           
