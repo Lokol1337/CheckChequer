@@ -6,12 +6,11 @@ jobs:
     runs-on: windows-latest
     steps: 
       - uses: actions/checkout@v2
-      - name: findFoldar
+      - name: Build
         run: |
           D:
           cd D:\a\CheckChequer\CheckChequer
-      - name: Build
-      - run: ./gradlew build
+          ./gradlew build
       - name: UnitTests
       - run: ./gradlew testReleaseUnitTest
       - name: Upload Artifact
