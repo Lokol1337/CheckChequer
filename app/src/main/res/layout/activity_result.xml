@@ -4,34 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityProductsAndMembers"
+    tools:context=".ActivityResult"
     android:orientation="vertical"
     android:paddingTop="40dp"
-    android:paddingHorizontal="15dp">
+    android:paddingHorizontal="50dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="РАПСРЕДЕЛЕНИЕ ТОВАРОВ"
+        android:text="РЕЗУЛЬТАТ:"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:textSize="18sp"/>
+        android:textSize="40sp"/>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/activity_result_text_view_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginTop="30dp">
-
-        <ListView
-            android:id="@+id/activity_products_and_members_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"/>
-
-    </LinearLayout>
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
 
     <Button
         android:id="@+id/activity_products_and_members_button_next"
@@ -43,7 +36,7 @@
         android:background="@color/red"
         android:textColor="@color/white"
         android:textAlignment="center"
-        android:text="ДАЛЕЕ"
+        android:text="ЗАВЕРШИТЬ ВСТРЕЧУ"
         android:textSize="16sp"
         android:textStyle="bold"
         android:onClick="ButtonNext"/>

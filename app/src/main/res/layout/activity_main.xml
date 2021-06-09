@@ -9,7 +9,7 @@
     android:paddingHorizontal="50dp"
     android:paddingTop="40dp">
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/activity_main_linear_layout_list_meetings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,6 +23,29 @@
             android:textColor="@color/black"
             android:textSize="16sp">
         </TextView>
+
+    </LinearLayout>-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="История встреч:"
+        android:textColor="@color/black"
+        android:textSize="16sp">
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_marginTop="30dp">
+
+        <ListView
+            android:id="@+id/activity_main_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

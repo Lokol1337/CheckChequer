@@ -14,11 +14,11 @@ import java.util.*
 class DataBaseHandler {
 
     data class Meeting(
-            val id: Int,
-            val date: String,
-            val countMembers: Int,
-            var arrayMembers: MutableList<MemberJSON>,
-            val stringOutput: String
+        val id: Int,
+        val date: String,
+        var countMembers: Int,
+        var arrayMembers: MutableList<MemberJSON>,
+        var stringOutput: String
     )
 
     data class MemberJSON(
@@ -57,18 +57,25 @@ class DataBaseHandler {
         MEETING_LIST = mutableListOf<Meeting>()
         MEMBER_LIST = mutableListOf<MemberJSON>()
         val jsonStr: String = FileInputStream(FILE).bufferedReader().use { it.readText() }
-        if (jsonStr.isNotEmpty())
+        if (jsonStr.isNotEmpty()) {
             try {
                 MEETING_LIST = _gson.fromJson(jsonStr, mutableListTutorialType)
             } catch (e: Exception) {
                 println("---- SMALL ERROR")
             }
+        }
+        else
+            addMeeting(mutableListOf())
     }
 
     fun writeTOFile(str: String) {
         val writer = PrintWriter(FILE)
         writer.print(str)
         writer.close()
+    }
+
+    fun getAllMeetings(){
+
     }
 
     fun addMeeting(members: MutableList<Member>) {
@@ -80,6 +87,7 @@ class DataBaseHandler {
     fun addMember(member: Member) {
         val m = MemberJSON(member.getName(), member.getStatus(), member.getSumm())
         MEETING_LIST[0].arrayMembers.add(m)
+        MEETING_LIST[0].countMembers++
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
         writeTOFile(jsonTutsArrayPretty)
@@ -90,13 +98,20 @@ class DataBaseHandler {
     }
 
     fun addMembers(members: MutableList<Member>) {
-        for (member: Member in members) {
-            val m = MemberJSON(member.getName(), member.getStatus(), member.getSumm())
-            MEETING_LIST[0].arrayMembers.add(m)
+        if (members.size != 0) {
+            for (member: Member in members) {
+                val m = MemberJSON(member.getName(), member.getStatus(), member.getSumm())
+                MEETING_LIST[0].arrayMembers.add(m)
+                MEETING_LIST[0].countMembers++
+            }
+            val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+            val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
+            writeTOFile(jsonTutsArrayPretty)
         }
-        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
-        val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
-        writeTOFile(jsonTutsArrayPretty)
+    }
+
+    fun addStringOutput(str: String){
+        MEETING_LIST[0].stringOutput = str
     }
 
 
@@ -130,7 +145,7 @@ class DataBaseHandler {
 
     fun getAllMembers(): MutableList<Member> {
         val listMembers: MutableList<Member> = mutableListOf()
-        for (i: Int in 0..getCountMembers()) {
+        for (i: Int in 0 until getCountMembers()) {
             val member: Member = Member()
             member.setName(MEETING_LIST[0].arrayMembers[i].name)
             member.setStatus(MEETING_LIST[0].arrayMembers[i].status)
@@ -152,6 +167,7 @@ class DataBaseHandler {
         writeTOFile("")
         MEETING_LIST = mutableListOf<Meeting>()
         MEMBER_LIST = mutableListOf<MemberJSON>()
+        addMeeting(mutableListOf())
     }
 
     fun stringAllUsers(): String {

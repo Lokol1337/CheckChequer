@@ -6,7 +6,7 @@ class Member {
     private var _status: Boolean
     private var _summ: Int
 
-    var _products: MutableList<Product> = mutableListOf()
+    private var _products: MutableList<Product> = mutableListOf()
 
     init {
         _name = ""
@@ -44,6 +44,11 @@ class Member {
     }
 
 
+    //ADD
+    fun addProduct(product: Product){
+        this._products.add(product)
+    }
+
     //SETTER'S
     fun setName(name: String) {
         this._name = name
@@ -59,6 +64,10 @@ class Member {
 
     fun setArrayProducts(products: MutableList<Product>){
         this._products = products
+    }
+
+    override fun toString(): String {
+        return this._name
     }
 
 }

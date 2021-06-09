@@ -17,6 +17,14 @@
             android:background="@drawable/custom_button_qr"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ДОБАВЛЕНИЕ ПОЗИЦИЙ С ЧЕКА"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="22sp"/>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -4,13 +4,13 @@ class Product {
 
     private var _name: String
     private var _price: Int
-    private var _count: Int
+    private var _count: Float
     private var _summ: Int
 
     constructor() {
         _name = ""
         _price = 0
-        _count = 0
+        _count = 0.toFloat()
         _summ = 0
     }
 
@@ -18,8 +18,15 @@ class Product {
     constructor(name: String, price: Int, count: Int){
         _name = name
         _price = price
-        _count = count
+        _count = count.toFloat()
         _summ = price * count
+    }
+
+    constructor(name: String, price: Int, count: Float, summ: Int){
+        _name = name
+        _price = price
+        _count = count
+        _summ = summ
     }
 
 
@@ -33,7 +40,7 @@ class Product {
     }
 
     fun getCount(): Int{
-        return _count
+        return _count.toInt()
     }
 
     fun getSumm(): Int {
@@ -51,16 +58,16 @@ class Product {
     }
 
     fun setCount(count: Int){
-        this._count = count
+        this._count = count.toFloat()
     }
 
     fun setSumm(summ: Int) {
-        this._count = summ
+        this._summ = summ
     }
 
     override fun toString(): String {
         return "Название: $_name" +
-                "\nКоличество: $_count" +
+                "\nКоличество: ${_count.toInt()}" +
                 "\nЦена: $_price"
     }
 

@@ -137,6 +137,7 @@ class ActivityScanOrWrite : AppCompatActivity() {
     fun ButtonNext(view: View){
         val intent = Intent(this, ActivityProductsAndMembers::class.java)
         val productsJSON = ProductsJSON()
+        //val path: String = intent.getStringExtra("path").toString()
         intent.putExtra("array-products", productsJSON.convertProductToJson(array_products))
         startActivity(intent)
     }
