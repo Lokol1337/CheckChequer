@@ -1,0 +1,19 @@
+name: react-native-android-build-apk
+on:
+  push:
+jobs:
+  build-android:
+    runs-on: self-hosted
+    steps: 
+      - name: Build Android Release
+        run: |
+          cd D:
+          cd D:/CheckChequer 
+          .\gradlew build
+          .\gradlew test
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release-unsigned.apk
+          path: D:/CheckChequer/app/build/outputs/apk/release/
+          
