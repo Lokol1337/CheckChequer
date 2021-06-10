@@ -6,8 +6,18 @@ jobs:
     runs-on: windows-latest
     steps: 
       - uses: actions/checkout@v2
-      - name: Build Android Release
+      - name: Build
         run: |
           D:
           cd D:\a\CheckChequer\CheckChequer
-          ./gradlew testReleaseUnitTest
+          ./gradlew build
+      - name: UnitTests
+        run: |
+          D:
+          cd D:\a\CheckChequer\CheckChequer
+          ./gradlew test
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-debug.apk
+          path: D:\a\CheckChequer\CheckChequer/app/build/outputs/apk/debug/
