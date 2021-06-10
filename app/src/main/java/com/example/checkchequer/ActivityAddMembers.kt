@@ -66,28 +66,6 @@ class ActivityAddMembers : AppCompatActivity() {
             members_adapter.addMember(this, true)
             members_adapter.notifyItemChanged(members_adapter.itemCount - 1)
         }
-
-        /*val linearLayout = findViewById<LinearLayout>(R.id.activity_add_members_linear_layout_main)
-        linearLayout.viewTreeObserver.addOnGlobalLayoutListener(
-            object : ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-
-                    val r = Rect()
-                    linearLayout.getWindowVisibleDisplayFrame(r)
-                    val screenHeight: Int = linearLayout.getRootView().getHeight()
-
-                    val keypadHeight: Int = screenHeight - r.bottom
-
-                    if (keypadHeight > screenHeight * 0.15) {
-                        // keyboard is opened
-                        Log.e("ActivityAddMembers", "keyboard opened")
-                    } else {
-                        // keyboard is closed
-                        Log.e("ActivityAddMembers", "keyboard closed")
-                        flag_clear_focus = true
-                    }
-                }
-            })*/
     }
 
     fun addNewMember (status: Boolean, name: String) {
