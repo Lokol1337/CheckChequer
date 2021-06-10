@@ -11,6 +11,7 @@ import android.widget.TextView
 class ActivityMeeting : AppCompatActivity() {
 
     lateinit var listView: ListView
+    var idMeeting: Int = -1
     var arrayMembers: MutableList<Member> = mutableListOf()
     var str_arrayMembers: MutableList<String> = mutableListOf()
 
@@ -21,7 +22,7 @@ class ActivityMeeting : AppCompatActivity() {
     }
 
     private fun initComponents() {
-        val idMeeting: Int = intent.getStringExtra("index-meeting").toString().toInt()
+        idMeeting = intent.getStringExtra("index-meeting").toString().toInt()
         val path = filesDir.toString()
         val dataBaseHandler: DataBaseHandler = DataBaseHandler(path)
         val meeting: DataBaseHandler.Meeting = dataBaseHandler.getMeeting(idMeeting)
@@ -32,7 +33,7 @@ class ActivityMeeting : AppCompatActivity() {
         }
 
         val textViewName = findViewById<TextView>(R.id.activity_meeting_text_view_name_meeting)
-        textViewName.text = "ВСТРЕЧА: ${meeting.date}"
+        textViewName.text = "${meeting.date}"
 
         val textViewResult = findViewById<TextView>(R.id.activity_meeting_text_view_result)
         textViewResult.text = meeting.stringOutput
@@ -44,6 +45,8 @@ class ActivityMeeting : AppCompatActivity() {
     }
 
     fun ButtonRepeatMeeting(view: View){
-
+        val intent = Intent(this, ActivityAddMembers::class.java)
+        intent.putExtra("repeated-meeting", idMeeting.toString())
+        startActivity(intent)
     }
 }

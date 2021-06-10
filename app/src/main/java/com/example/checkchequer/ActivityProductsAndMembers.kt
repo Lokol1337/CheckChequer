@@ -78,15 +78,20 @@ class ActivityProductsAndMembers : AppCompatActivity() {
 
     fun calculation(): String{
         var result = ""
-        for (member in arrayMembers){
+        for ((i, member) in arrayMembers.withIndex()){
             if (!member.getStatus()) {
                 var sum: Float = 0.toFloat()
                 val products: MutableList<Product> = member.getArrayProducts()
                 for (product in products) {
                     sum += product.getSumm().toFloat() / product.getCount()
                 }
-                result += member.getName() + " --> " + sum.toInt() + " р.\n"
+                result += member.getName() + " --> " + sum.toInt() + " р."
+                member.setSumm(sum.toInt())
             }
+            else
+                result += member.getName() + " --> 0 р."
+            if (i != arrayMembers.size)
+                result += "\n"
         }
         return result
     }

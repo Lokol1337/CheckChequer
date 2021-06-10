@@ -7,7 +7,11 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.PrintWriter
 import java.lang.Exception
-import java.text.SimpleDateFormat
+import java.time.DayOfWeek
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset.of
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -74,14 +78,15 @@ class DataBaseHandler {
         writer.close()
     }
 
+
+    //---- ADDERS
     fun addMeeting(members: MutableList<Member>) {
-        val sdf = SimpleDateFormat("yyyy-MM-dd' 'HH:mm")
-        MEETING_LIST.add(Meeting(MEETING_LIST.size, sdf.format(Date()), 0, mutableListOf<MemberJSON>(), ""))
+        val sdf = stringData()
+        MEETING_LIST.add(Meeting(MEETING_LIST.size, sdf, 0, mutableListOf<MemberJSON>(), ""))
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val jsonTutsArrayPretty: String = gsonPretty.toJson(MEETING_LIST)
         writeTOFile(jsonTutsArrayPretty)
         addMembers(members)
-
     }
 
     fun addMember(member: Member) {
@@ -98,10 +103,6 @@ class DataBaseHandler {
             arrayM.add(member)
             addMeeting(arrayM)
         }
-
-        /*MEETING_LIST[0].arrayMembers.add(m)
-        val jsonArray = mapper.writeValueAsString(MEETING_LIST)
-        writeTOFile(jsonArray)*/
     }
 
     fun addMembers(members: MutableList<Member>) {
@@ -127,7 +128,7 @@ class DataBaseHandler {
     }
 
 
-    //GETTERS
+    //---- GETTERS
     fun getMeeting(id: Int): Meeting{
         if (id < MEETING_LIST.size)
             return MEETING_LIST[id]
@@ -192,6 +193,72 @@ class DataBaseHandler {
 
     //OTHERS FUNCTIONS
 
+    fun stringData(): String{
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            val current = LocalDateTime.now()
+        } else {
+
+        }
+
+
+        val calendar = Calendar.getInstance()
+        var strData = ""
+
+        val day: String = calendar.get(Calendar.DAY_OF_MONTH).toString() + "-ое"
+        var month: String = calendar.get(Calendar.MONTH).toString()
+        var dayWeek: String = calendar.get(Calendar.DAY_OF_WEEK).toString()
+        val year: String = calendar.get(Calendar.YEAR).toString()
+        var hour: String = calendar.get(Calendar.HOUR).toString()
+        var minute: String = calendar.get(Calendar.MINUTE).toString()
+        var second: String = calendar.get(Calendar.SECOND).toString()
+
+        month = convertMonthToSting(month.toInt())
+        dayWeek = "(${convertDayWeekToString(dayWeek.toInt())})"
+
+        hour = convertTimeToString(hour.toInt() + 12)
+        minute = convertTimeToString(minute.toInt())
+        second = convertTimeToString(second.toInt())
+
+        strData = "$day ${month.toUpperCase()} $dayWeek\n $hour:$minute:$second $year"
+        return strData
+
+    }
+
+    fun convertMonthToSting(month: Int): String{
+        return when (month) {
+            1 -> "ЯНВАРЯ"
+            2 -> "ФЕВРАЛЯ"
+            3 -> "МАРТА"
+            4 -> "АПРЕЛЯ"
+            5 -> "МАЯ"
+            6 -> "ИЮНЯ"
+            7 -> "ИЮЛЯ"
+            8 -> "АВГУСТА"
+            9 -> "СЕНТЯБРЯ"
+            10 -> "ОКТЯБРЯ"
+            11 -> "НОЯБРЯ"
+            else -> "ДЕКАБРЯ"
+        }
+    }
+
+    fun convertDayWeekToString(dayWeek: Int): String{
+        return when (dayWeek) {
+            2 -> "понедельник"
+            3 -> "вторник"
+            4 -> "среда"
+            5 -> "четверг"
+            6 -> "пятница"
+            7 -> "суббота"
+            else -> "воскресенье"
+        }
+    }
+
+    fun convertTimeToString(number: Int): String {
+        if (number < 10)
+            return "0$number"
+        return number.toString()
+    }
+
     fun memberIsExist(member: Member): Boolean {
         for (m: MemberJSON in MEETING_LIST[MEETING_LIST.size-1].arrayMembers) {
             if (m.name == member.getName() && m.status == member.getStatus() && m.summ == member.getSumm())
@@ -213,6 +280,22 @@ class DataBaseHandler {
             str += m.name + ":  " + m.status + "  " + m.summ + "\n"
         }
         return str
+    }
+
+    fun membersToMembersJSON(members: MutableList<Member>): MutableList<MemberJSON>{
+        val membersJSON: MutableList<MemberJSON> = mutableListOf()
+        for (member in members){
+            membersJSON.add(MemberJSON(member.getName(), member.getStatus(), member.getSumm()))
+        }
+        return membersJSON
+    }
+
+    fun membersJSONToMembers(membersJSON: MutableList<MemberJSON>): MutableList<Member>{
+        val members: MutableList<Member> = mutableListOf()
+        for (memberJSON in membersJSON){
+            members.add(Member(memberJSON.name, memberJSON.status))
+        }
+        return members
     }
 }
 

@@ -54,6 +54,14 @@ class MembersAdapter(val linearLayout: LinearLayout, var array_members: MutableL
         setButtonNPClickable(context, false)
     }
 
+    fun addMember(context: Context, flag: Boolean, name: String) {
+        members_size++
+        array_members.add(Member(name, flag))
+        flag_filled_edit_texts = true
+        if (members_size - 1 == 0)
+            setButtonNPClickable(context, true)
+    }
+
     fun deleteMember(context: Context){
         if(members_size > 1){
             array_members.removeAt(members_size - 1)
@@ -97,6 +105,10 @@ class MembersAdapter(val linearLayout: LinearLayout, var array_members: MutableL
             } else
                 this.status_button.setImageResource(R.drawable.gray_no_money)
             this.status_button.isClickable = false
+
+            if (member.getName().isNotEmpty()){
+                this.name_edit_text.setText(member.getName())
+            }
 
             checkFields()
 

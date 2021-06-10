@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity() {
         listView = findViewById<ListView>(R.id.activity_main_list_view)
         adapter = ArrayAdapter<String>(this, R.layout.simple_list_item, str_array_meeting)
         listView.adapter = adapter
-        listView.setOnItemClickListener { adapterView, view, positions, l ->
+        listView.setOnItemClickListener { adapterView, view, position, l ->
             val intentItem = Intent(this, ActivityMeeting::class.java)
-            intentItem.putExtra("index-meeting", positions.toString())
+            intentItem.putExtra("index-meeting", position.toString())
             startActivity(intentItem)
         }
     }
