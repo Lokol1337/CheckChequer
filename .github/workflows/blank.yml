@@ -15,7 +15,7 @@ jobs:
         run: |
           D:
           cd D:\a\CheckChequer\CheckChequer
-          ./gradlew testReleaseUnitTest
+          ./gradlew test
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
