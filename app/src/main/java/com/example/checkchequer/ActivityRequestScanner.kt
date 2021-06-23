@@ -11,11 +11,15 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import java.lang.AssertionError
+import retrofit2.http.Query
+
 
 class ActivityRequestScannerAPI : AppCompatActivity() {
 
-//    private lateinit var scannerService: RetrofitServices
+
+    //IP локального сервера
+    val API_LOCAL_URL = "http://192.168.1.145:8070"
+
     lateinit var context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,10 +36,10 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
 
         var list_positions: List<Item> = mutableListOf()
         val retrofit: RetrofitClient = RetrofitClient
-        val scannerService: RetrofitServices = retrofit.getClient(
-            "https://scanner-oleg.herokuapp.com").create(RetrofitServices::class.java)
+        val scannerService: RetrofitServices = retrofit.getClient(API_LOCAL_URL)
+                .create(RetrofitServices::class.java)
 
-        scannerService.getCheck().enqueue(object : Callback<List<Item>>{
+        scannerService.getCheck(text).enqueue(object : Callback<List<Item>>{
             override fun onResponse(call: Call<List<Item>>, response: Response<List<Item>>) {
                 list_positions = response.body()!!
                 var result = ""
@@ -47,7 +51,7 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
 
                 val arrayProducts: MutableList<Product> = mutableListOf()
                 for (item in list_positions){
-                    arrayProducts.add(Product(item.name, item.price, item.quantity.toFloat(), item.sum))
+                    arrayProducts.add(Product(item.name, item.price/100, item.quantity.toFloat(), item.sum/100))
                 }
 
                 val intent = Intent(context, ActivityProductsAndMembers::class.java)
@@ -82,7 +86,7 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
 
     interface RetrofitServices {
         @GET("/check")
-        fun getCheck(): Call<List<Item>>
+        fun getCheck(@Query("checkString") checkString : String): Call<List<Item>>
     }
 
 }
