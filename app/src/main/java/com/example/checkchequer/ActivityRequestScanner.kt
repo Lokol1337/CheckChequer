@@ -51,10 +51,7 @@ class ActivityRequestScannerAPI : AppCompatActivity() {
 
                 val arrayProducts: MutableList<Product> = mutableListOf()
                 for (item in list_positions){
-                    var quant: Float = item.quantity
-                    if (quant < 1)
-                        quant = 1.0F
-                    arrayProducts.add(Product(item.name, item.price/100, quant, item.sum/100))
+                    arrayProducts.add(Product(item.name, item.price/100, item.quantity, item.sum/100))
                 }
 
                 val intent = Intent(context, ActivityProductsAndMembers::class.java)

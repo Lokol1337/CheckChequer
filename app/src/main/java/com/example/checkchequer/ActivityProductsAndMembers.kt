@@ -110,7 +110,7 @@ class MyDialogFragment(
     private val array: Array<String> = str_arrayMembers.toTypedArray()
     private val nameCurrentProduct: String = arrayProducts[position].getName()
     private val priceCurrentProduct: Int = arrayProducts[position].getPrice()
-    private val countCurrentProduct: Int = arrayProducts[position].getCount()
+    private val countCurrentProduct: Float = arrayProducts[position].getCount()
     private var countChecked: Int = 0
     private val summCurrentProduct: Int = arrayProducts[position].getSumm()
 

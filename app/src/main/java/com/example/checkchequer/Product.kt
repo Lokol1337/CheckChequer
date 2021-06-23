@@ -15,11 +15,11 @@ class Product {
     }
 
 
-    constructor(name: String, price: Int, count: Int){
+    constructor(name: String, price: Int, count: Float){
         _name = name
         _price = price
-        _count = count.toFloat()
-        _summ = price * count
+        _count = count
+        _summ = (price * count).toInt()
     }
 
     constructor(name: String, price: Int, count: Float, summ: Int){
@@ -39,8 +39,8 @@ class Product {
         return _price
     }
 
-    fun getCount(): Int{
-        return _count.toInt()
+    fun getCount(): Float{
+        return _count
     }
 
     fun getSumm(): Int {

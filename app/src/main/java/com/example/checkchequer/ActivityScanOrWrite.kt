@@ -74,7 +74,7 @@ class ActivityScanOrWrite : AppCompatActivity() {
 
         textViewError.text = checkCorrectDataProduct(nameProduct, priceProduct)
         if (textViewError.text.toString().isEmpty()){
-            val newProduct = Product(nameProduct, priceProduct.toInt(), count)
+            val newProduct = Product(nameProduct, priceProduct.toInt(), count.toFloat())
             array_products.add(newProduct)
             adapter.add(newProduct.toString())
 

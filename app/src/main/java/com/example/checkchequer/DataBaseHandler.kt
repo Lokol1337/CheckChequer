@@ -7,11 +7,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.PrintWriter
 import java.lang.Exception
-import java.time.DayOfWeek
 import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset.of
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -34,7 +30,7 @@ class DataBaseHandler {
     data class ProductJSON(
             val name: String,
             val price: Int,
-            val count: Int,
+            val count: Float,
             val summ: Int
     )
 
@@ -309,7 +305,7 @@ class ProductsJSON {
 
         val arrayProductsJSON: MutableList<DataBaseHandler.ProductJSON> = mutableListOf()
         for (product in arrayProducts){
-            val prdctJSON = DataBaseHandler.ProductJSON(product.getName(), product.getPrice(), product.getCount(), product.getSumm())
+            val prdctJSON = DataBaseHandler.ProductJSON(product.getName(), product.getPrice(), product.getCount().toFloat(), product.getSumm())
             arrayProductsJSON.add(prdctJSON)
         }
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
@@ -326,7 +322,7 @@ class ProductsJSON {
 
         val arrayProducts: MutableList<Product> = mutableListOf()
         for (productJSON in arrayProductsJSON){
-            arrayProducts.add(Product(productJSON.name, productJSON.price, productJSON.count))
+            arrayProducts.add(Product(productJSON.name, productJSON.price, productJSON.count.toFloat()))
         }
         return arrayProducts
     }
